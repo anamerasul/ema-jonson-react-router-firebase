@@ -1,20 +1,36 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import "./SignUp.css"
+import auth from '../../firebase.init';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+
+
 
 const SignUp = () => {
 
     const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [error, setError] = useState('')
+
+    const navigate = useNavigate()
+
+
+
+    const [createUserWithEmailAndPassword, user] = useCreateUserWithEmailAndPassword(auth)
 
 
     const handleGoogleSignUp = () => {
 
 
 
+    }
+
+    const handleNameBlur = (e) => {
+
+        setName(e.target.value)
     }
 
     const handleEmailBlur = e => {
@@ -32,6 +48,10 @@ const SignUp = () => {
 
         setConfirmPassword(e.target.value)
     }
+
+    if (user) {
+        navigate('/')
+    }
     const handleSignUPSubmit = (e) => {
 
         e.preventDefault()
@@ -40,7 +60,20 @@ const SignUp = () => {
             setError('your password didnot match')
             return;
         }
+
+        if (password.length < 6) {
+
+            setError('password must be 6 charecter long')
+        }
+
+
+        createUserWithEmailAndPassword(email, password)
+
     }
+
+    // console.log(name)
+
+
 
     return (
 
@@ -61,9 +94,22 @@ const SignUp = () => {
                         </button> */}
                         </div>
 
+                        <div className="mb-4">
+                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="name">
+                                Name
+                            </label>
+
+                            <input onBlur={handleNameBlur} className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="name" required />
+                        </div>
+                        {
+
+                            name ? '' : <p className="text-red-600 text-xs italic">Provide a name</p>
+                        }
+
+
 
                         <div className="mb-4">
-                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="Email">
+                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email">
                                 Email
                             </label>
 
