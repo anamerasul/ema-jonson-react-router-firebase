@@ -27,7 +27,7 @@ const Login = () => {
                 <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-32">
 
 
-                    <h2 className="text-lg text-center bg-orange-100">Login</h2>
+                    <h2 className="text-lg text-center text-[32px]">Login</h2>
                     <div className="mt-4 mx-auto">
 
                         {/* <button className="bg-blue-200 mx-auto text-center hover:bg-gray-600 hover:text-white text-black font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline text-[14px]">
@@ -87,8 +87,8 @@ const Login = () => {
                             Create a user
 
                         </Link></p>
-                        <hr />
-                        <p><small className="bg-gray-600 border-x-8 border-gray-600"></small>or <small></small></p>
+
+
                     </div>
 
 

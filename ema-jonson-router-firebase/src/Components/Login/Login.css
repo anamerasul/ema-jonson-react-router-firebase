@@ -21,3 +21,10 @@ margin: 0 auto;
 
     display: block;
     }
+.horizontal{
+
+    background-color:black;
+    width: 50px;
+    border-right-width: 60px;
+
+}
