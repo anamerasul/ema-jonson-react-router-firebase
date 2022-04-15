@@ -67,6 +67,8 @@ const SignUp = () => {
 
 
         createUserWithEmailAndPassword(email, password)
+
+        setName(user.displayName)
         verifyEmail()
 
 

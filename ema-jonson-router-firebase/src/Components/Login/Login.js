@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import './Login.css'
 
@@ -20,9 +20,11 @@ const Login = () => {
     ] = useSignInWithEmailAndPassword(auth);
 
     const navigate = useNavigate()
+    const location = useLocation()
+    const from = location?.state?.form?.pathname || '/'
 
     if (user) {
-        navigate('/shop')
+        navigate(from, { replace: true })
     }
 
 
