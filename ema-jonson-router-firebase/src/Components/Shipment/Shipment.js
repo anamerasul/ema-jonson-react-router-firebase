@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 
 const Shipment = () => {
+
+    const [user] = useAuthState(auth)
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
     const [address, setAddress] = useState('')
-    const [phoneNumber, , setPhoneNumber] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState(0)
     const [date, setDate] = useState('')
     const [error, setError] = useState('')
 
@@ -17,7 +20,7 @@ const Shipment = () => {
 
     const handleEmailBlur = e => {
 
-        setEmail(e.target.value)
+        setEmail(user.email)
     }
 
 
@@ -29,8 +32,14 @@ const Shipment = () => {
     }
 
     const handlePhoneNumberdBlur = e => {
+        console.log(e.target.value)
 
-        setPhoneNumber(e.target.value)
+        const num = e.target.value
+        console.log(typeof +num)
+
+        if (num) {
+            setPhoneNumber(num)
+        }
     }
     const handleDateBlur = e => {
 
@@ -41,7 +50,9 @@ const Shipment = () => {
     const handleShipment = (e) => {
 
         e.preventDefault()
+        const shiping = { name, email, address, phoneNumber, date }
 
+        console.log(shiping)
 
 
     }
@@ -91,7 +102,7 @@ const Shipment = () => {
                                 Email
                             </label>
 
-                            <input onBlur={handleEmailBlur} className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="email" required />
+                            <input value={user.email} onBlur={handleEmailBlur} readOnly className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder={user.email} required />
                         </div>
 
 
@@ -136,7 +147,7 @@ const Shipment = () => {
                         <div className="flex items-center justify-between ">
 
 
-                            <input type='submit' className=" ml-10 bg-orange-400 hover:bg-gray-600 hover:text-white text-black font-bold py-1 px-16 rounded-pill focus:outline-none  focus:shadow-outline" value='Add shipping' />
+                            <input type='submit' className=" ml-10 bg-orange-400 hover:bg-gray-600 hover:text-white text-black font-bold py-1 px-16 rounded-pill focus:outline-none  focus:shadow-outline" value='Add shippinggit' />
 
                             {/* <button className="inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker">
                             Forgot Password?
