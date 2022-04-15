@@ -4,6 +4,7 @@ import { FcGoogle } from 'react-icons/fc';
 import "./SignUp.css"
 import auth from '../../firebase.init';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { sendEmailVerification } from 'firebase/auth';
 
 
 
@@ -15,7 +16,7 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [error, setError] = useState('')
 
-    const navigate = useNavigate()
+
 
 
 
@@ -49,9 +50,7 @@ const SignUp = () => {
         setConfirmPassword(e.target.value)
     }
 
-    if (user) {
-        navigate('/')
-    }
+
     const handleSignUPSubmit = (e) => {
 
         e.preventDefault()
@@ -68,11 +67,30 @@ const SignUp = () => {
 
 
         createUserWithEmailAndPassword(email, password)
+        verifyEmail()
+
 
     }
 
     // console.log(name)
 
+    console.log(user);
+
+
+    const verifyEmail = () => {
+
+        sendEmailVerification(auth.currentUser)
+            .then(() => {
+
+                console.log('verify')
+            })
+    }
+
+    const navigate = useNavigate()
+
+    if (user) {
+        navigate('/shop')
+    }
 
 
     return (
@@ -103,7 +121,7 @@ const SignUp = () => {
                         </div>
                         {
 
-                            name ? '' : <p className="text-red-600 text-xs italic">Provide a name</p>
+                            !name && <p className="text-red-600 text-xs italic">Provide a name</p>
                         }
 
 

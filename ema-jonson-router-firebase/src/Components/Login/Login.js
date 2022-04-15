@@ -1,9 +1,67 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import './Login.css'
 
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+
 const Login = () => {
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    // const [error, setError] = useState('')
+
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
+
+    const navigate = useNavigate()
+
+    if (user) {
+        navigate('/shop')
+    }
+
+
+    const handleGoogleSignIn = () => {
+
+
+
+    }
+
+
+    const handleEmailBlur = e => {
+
+        setEmail(e.target.value)
+    }
+
+
+    const handlePasswordBlur = e => {
+
+        setPassword(e.target.value)
+    }
+
+
+    const handleLoginSubmit = (e) => {
+
+        e.preventDefault()
+
+        signInWithEmailAndPassword(email, password)
+
+
+
+    }
+
+    // console.log(name)
+
+
+
+
+
+
     return (
         // <div className="form-container mt-16">
         //     <div>
@@ -24,7 +82,7 @@ const Login = () => {
             <div className="w-full max-w-xs relative">
 
 
-                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-32">
+                <form onSubmit={handleLoginSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-32">
 
 
                     <h2 className="text-lg text-center text-[32px]">Login</h2>
@@ -41,7 +99,7 @@ const Login = () => {
                             Email
                         </label>
 
-                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="email" required />
+                        <input onBlur={handleEmailBlur} className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="email" required />
                     </div>
 
 
@@ -50,9 +108,10 @@ const Login = () => {
                         <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="password">
                             Password
                         </label>
-                        <input className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" required />
+                        <input onBlur={handlePasswordBlur} className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" required />
 
-                        <p className="text-red text-xs italic">Please choose a password.</p>
+                        <p className="text-red text-xs italic">{error?.message}</p>
+
                     </div>
 
                     <div className="flex items-start mb-6">
@@ -81,6 +140,10 @@ const Login = () => {
 
                     </div>
 
+                    {
+                        loading && <p>Loading</p>
+                    }
+
                     <div className="p-4" >
 
                         <p className="text-xs">New to ema-jon? <Link className="text-xs text-orange-600" to="/signup">
@@ -97,7 +160,7 @@ const Login = () => {
 
                 </form>
 
-                <button className="bg-gray-200 mx-auto flex justify-between items-center text-center absolute bottom-7 left-12   text-black font-bold py-1 px-8 rounded focus:outline-none focus:shadow-outline text-[14px]">
+                <button onClick={handleGoogleSignIn} className="bg-gray-200 mx-auto flex justify-between items-center text-center absolute bottom-7 left-12   text-black font-bold py-1 px-8 rounded focus:outline-none focus:shadow-outline text-[14px]">
                     <p>Continue with</p>   <FcGoogle className='ml-2'></FcGoogle>
                 </button>
 
